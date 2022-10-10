@@ -2,12 +2,13 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { ACCESS_TOKEN, API_URL } from '../utils/config';
+import { API_URL_ORG } from '../utils/config';
 import Link from 'next/link';
 
 const Devices: NextPage = () => {
   const { data } = useQuery(['devices'], async () => {
-    const res = await axios.get(`${API_URL}/devices/`, {
+    const ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
+    const res = await axios.get(`${API_URL_ORG}/devices/`, {
       headers: {
         authorization: `Bearer ${ACCESS_TOKEN}`
       }

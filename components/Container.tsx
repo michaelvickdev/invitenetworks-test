@@ -1,7 +1,9 @@
 
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { API_URL, EMAIL, PASSWORD } from '../utils/config';
 
 interface ContainerProps {
   children: JSX.Element
@@ -21,6 +23,21 @@ function Container({ children }: ContainerProps) {
       path: "/devices"
     }
   ];
+
+  const getToken = () => {
+    const body = new FormData();
+    body.append("username", EMAIL);
+    body.append("password", PASSWORD);
+    body.append("grant_type", "password");
+
+    axios.post(`${API_URL}/tokens`, body).then(res => {
+      localStorage.setItem("ACCESS_TOKEN", res.data.access_token);
+    });
+  }
+
+  useEffect(() => {
+    getToken();
+  }, []);
 
   return (
     <div>

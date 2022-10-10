@@ -4,13 +4,14 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { ACCESS_TOKEN, API_URL } from '../../utils/config';
+import { API_URL_ORG } from '../../utils/config';
 import { Interface } from '../../utils/types';
 
 const Interface: NextPage = () => {
   const router = useRouter();
   const { data } = useQuery(['interface', router.query.id], async () => {
-    const res = await axios.get(`${API_URL}/interfaces/`, {
+    const ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
+    const res = await axios.get(`${API_URL_ORG}/interfaces/`, {
       headers: {
         authorization: `Bearer ${ACCESS_TOKEN}`
       }
